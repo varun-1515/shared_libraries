@@ -1,23 +1,17 @@
 
 def call(Map config = [:]) {
 
-    String type = config.type ?: 'maven'
-    String dir  = config.dir  ?: '.'
+    String buildType = config.type ?: 'maven'
+    String workDir   = config.dir  ?: '.'
 
-    echo "Building ${type} project in directory: ${dir}"
+    echo "Building ${buildType} project in directory: ${workDir}"
 
-    dir(dir) {
-        if (type == 'maven') {
+    dir(workDir) {
+        if (buildType == 'maven') {
             sh 'mvn clean package'
-        } else if (type == 'cmake') {
-            sh '''
-                mkdir -p build
-                cd build
-                cmake ..
-                make
-            '''
         } else {
-            error "Unsupported build type: ${type}"
+            error "Unsupported build type: ${buildType}"
         }
     }
 }
+

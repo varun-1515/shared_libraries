@@ -1,15 +1,15 @@
 def call(Map config = [:]) {
 
-    String type = config.type ?: 'maven'
-    String dir  = config.dir  ?: '.'
+    String testType = config.type ?: 'maven'
+    String workDir  = config.dir  ?: '.'
 
-    echo "Running unit tests for ${type} project in directory: ${dir}"
+    echo "Running unit tests for ${testType} project in directory: ${workDir}"
 
-    dir(dir) {
-        if (type == 'maven') {
+    dir(workDir) {
+        if (testType == 'maven') {
             sh 'mvn test'
         } else {
-            error "Unsupported test type"
+            error "Unsupported test type: ${testType}"
         }
     }
 }
